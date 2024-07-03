@@ -15,11 +15,30 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
+        User::create([
+            'rfid_number' => '1234567890',
+            'first_name' => 'John',
+            'middle_name' => 'Doe',
+            'last_name' => 'Smith',
             'username' => 'test',
+            'role' => 'admin',
+            'email' => 'test@example.com',
             'password' => bcrypt('password'),
-            // 'email' => 'test@example.com',
+            'phone' => '1234567890',
+            'status' => 'active',
         ]);
+
+        // User::factory()->create([
+        //     'rfid_number' => '1234567890',
+        //     'first_name' => 'John',
+        //     'middle_name' => 'Doe',
+        //     'last_name' => 'Smith',
+        //     'username' => 'test',
+        //     'role' => 'admin',
+        //     'email' => 'test@example.com',
+        //     'password' => bcrypt('password'),
+        //     'phone' => '1234567890',
+        //     'status' => 'active',
+        // ]);
     }
 }

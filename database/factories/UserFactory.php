@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -12,9 +13,14 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
     /**
+     * The name of the factory's corresponding model.
+     */
+    protected $model = User::class;
+
+    /**
      * The current password being used by the factory.
      */
-    protected static ?string $password;
+    protected static ?string $password = null;
 
     /**
      * Define the model's default state.
@@ -23,18 +29,18 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        // return [
-        //     'name' => fake()->name(),
-        //     'email' => fake()->unique()->safeEmail(),
-        //     'email_verified_at' => now(),
-        //     'password' => static::$password ??= Hash::make('password'),
-        //     'remember_token' => Str::random(10),
-        // ];
         return [
-            'name' => fake()->name(),
-            'username' => fake()->unique(),
+            'rfid_number' => $this->faker->unique()->randomNumber(9),
+            'first_name' => $this->faker->firstName,
+            'middle_name' => $this->faker->optional()->firstName,
+            'last_name' => $this->faker->lastName,
+            'username' => $this->faker->unique()->userName,
+            'role' => $this->faker->randomElement(['admin', 'college-dean', 'chairperson', 'instructor', 'student' ]),
+            'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => static::$password ??= Hash::make('password'), // Default password is 'password'
+            'phone' => $this->faker->optional()->phoneNumber,
+            'status' => 'active', // Default status is 'active'
             'remember_token' => Str::random(10),
         ];
     }

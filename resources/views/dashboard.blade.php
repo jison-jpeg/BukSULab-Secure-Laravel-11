@@ -1,17 +1,36 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+    @section('title', 'Dashboard - ' . config('app.name'))
+    @section('breadcrumb-title', 'Dashboard')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            {{-- <h1>Hello, {{ session('user')->first_name }}!👋</h1> --}}
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">@yield('breadcrumb-title', 'Breadcrumb Name')</li>
+                </ol>
+            </nav>
         </div>
-    </div>
+
+          <section class="section dashboard">
+            <div class="row">
+                @if (auth()->user()->role === 'superadmin')
+                    @include('dashboard.superadmin')
+                @endif
+                @if (auth()->user()->role === 'admin')
+                    @include('dashboard.admin')
+                @endif
+                @if (auth()->user()->role === 'sme')
+                    @include('dashboard.smes')
+                @endif
+                @if (auth()->user()->role === 'genpub')
+                    @include('dashboard.genpub')
+                @endif
+            </div>
+        </section>
+        
+
+    </main>
 </x-app-layout>
